@@ -7,6 +7,11 @@ body {
 }
 .tab {
   margin: 0 10px;
+  white-space: nowrap;
+}
+.tab:after{
+  content: " ";
+  white-space: normal;
 }
 .tab.selected,.tab:hover {
   font-weight: bold;

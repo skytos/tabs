@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class Tab extends Component {
@@ -30,7 +29,7 @@ class App extends Component {
           <Tab
             name={tab}
             key={i}
-            selected={i == this.state.selected}
+            selected={i === this.state.selected}
             onSelect={()=>this.handleSelect(i)}
           />
         )}
