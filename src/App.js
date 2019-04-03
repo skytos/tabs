@@ -2,24 +2,38 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+class Tab extends Component {
+  render() {
+    return (
+      <span
+        className={"tab" + (this.props.selected ? " selected" : "")}
+        onClick={this.props.onSelect}
+      >
+        {this.props.name}
+      </span>
+    )
+  }
+}
+
 class App extends Component {
+  state = {
+    tabs: ["Cool Stuff", "Longer Items Are Here", "Boo", "Babba Nogga"],
+    selected: 0,
+  }
+
+  handleSelect(i) { this.setState({selected: i});}
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.state.tabs.map((tab, i) =>
+          <Tab
+            name={tab}
+            key={i}
+            selected={i == this.state.selected}
+            onSelect={()=>this.handleSelect(i)}
+          />
+        )}
       </div>
     );
   }
