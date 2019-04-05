@@ -1,79 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import VisibleTabs from './VisibleTabs'
+import DropDownMenu from './DropDownMenu'
+import DropDown from './DropDown'
+import '../TabBar.css';
 
-function Tab(props) {
-  var {id, name, onSelect, selected} = props;
-  return (
-    <span
-      className={"tab" + (selected ? " selected" : "")}
-      onClick={() => onSelect(id)}
-    >
-      {name}
-    </span>
-  );
-}
-
-function VisibleTabs(props) {
-  var {tabs, overflowIndex, onSelect, selectedIndex} = props;
-  return (
-    <>
-    {tabs.slice(0, overflowIndex).map((tab, i) =>
-        <Tab
-        key={i}
-        id={i}
-        name={tab}
-        selected={i === selectedIndex}
-        onSelect={onSelect}
-      />
-    )}
-    </>
-  )
-}
-
-
-function DropDownMenu(props) {
-  var {tabs, overflowIndex, onSelect, selectedIndex} = props;
-  return (
-    <ul>
-      {tabs.slice(overflowIndex).map((tab, i) =>
-        <li key={"li-"+(i+overflowIndex)}>
-          <Tab
-            key={i+overflowIndex}
-            id={i+overflowIndex}
-            name={tab}
-            selected={i+overflowIndex === selectedIndex}
-            onSelect={onSelect}
-          />
-        </li>
-      )}
-      </ul>
-  )
-}
-
-function DropDown(props) {
-  var {children, dropDownOpen, dropDownHeader, dropDownHeaderSelected, onToggleDropDown} = props;
-  return (
-    <span className="dropdown">
-      <span
-        className={"dropdown-header" + (dropDownHeaderSelected ? " selected" : "")}
-        onClick={onToggleDropDown}
-      >
-        {dropDownHeader}
-      </span>
-      {
-        dropDownOpen && (
-          <>
-            {children}
-            <div onClick={onToggleDropDown}>Close</div>
-          </>
-        )
-      }
-    </span>
-  );
-
-}
-
-class App extends Component {
+class TabBar extends Component {
   constructor() {
     super();
     this.ref = React.createRef();
@@ -148,4 +79,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default TabBar;
