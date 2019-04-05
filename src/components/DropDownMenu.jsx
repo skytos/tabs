@@ -4,7 +4,7 @@ import Tab from './Tab'
 function DropDownMenu(props) {
   var {tabs, overflowIndex, onSelect, selectedIndex} = props;
   return (
-    <ul class="dropdown-menu">
+    <ul className="dropdown-menu">
       {tabs.slice(overflowIndex).map((tab, i) =>
         <li key={"li-"+(i+overflowIndex)}>
           <Tab

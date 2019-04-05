@@ -44,6 +44,11 @@ class TabBar extends Component {
     this.setState({dropDownOpen: !this.state.dropDownOpen});
   };
 
+  handleSelectAndToggleDropDown =(i) => {
+    this.handleSelect(i);
+    this.handleToggleDropDown();
+  }
+
   componentDidMount() {
     this.handleResize();
   }
@@ -71,7 +76,7 @@ class TabBar extends Component {
               tabs={this.state.tabs}
               selectedIndex={this.state.selectedIndex}
               overflowIndex={this.state.overflowIndex}
-              onSelect={(i)=>{this.handleSelect(i);this.handleToggleDropDown();}}
+              onSelect={this.handleSelectAndToggleDropDown}
             />
           </DropDown>
         }
