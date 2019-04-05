@@ -2,16 +2,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Courier";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+.tab-bar {
+  white-space: nowrap;
 }
 .tab {
   margin: 0 10px;
-  white-space: nowrap;
-}
-.tab:after{
-  content: " ";
-  white-space: normal;
 }
 .tab.selected,.tab:hover,.dropdown-header.selected,.dropdown-header:hover {
   font-weight: bold;
