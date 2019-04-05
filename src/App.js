@@ -1,38 +1,126 @@
 import React, { Component } from 'react';
 import './App.css';
 
-class Tab extends Component {
-  render() {
-    return (
+function Tab(props) {
+  var {id, name, onSelect, selected} = props;
+  return (
+    <span
+      className={"tab" + (selected ? " selected" : "")}
+      onClick={() => onSelect(id)}
+    >
+      {name}
+    </span>
+  );
+}
+
+function VisibleTabs(props) {
+  var {tabs, overflowIndex, onSelect, selectedIndex} = props;
+  return (
+    <>
+    {tabs.slice(0, overflowIndex).map((tab, i) =>
+        <Tab
+        key={i}
+        id={i}
+        name={tab}
+        selected={i === selectedIndex}
+        onSelect={onSelect}
+      />
+    )}
+    </>
+  )
+}
+
+
+function DropDownMenu(props) {
+  var {tabs, overflowIndex, onSelect, selectedIndex} = props;
+  return (
+    <ul>
+      {tabs.slice(overflowIndex).map((tab, i) =>
+        <li>
+          <Tab
+            key={i+overflowIndex}
+            id={i+overflowIndex}
+            name={tab}
+            selected={i+overflowIndex === selectedIndex}
+            onSelect={onSelect}
+          />
+        </li>
+      )}
+      </ul>
+  )
+}
+
+function DropDown(props) {
+  var {children, dropDownOpen, dropDownHeader, dropDownHeaderSelected, onToggleDropDown} = props;
+  return (
+    <span className="dropdown">
       <span
-        className={"tab" + (this.props.selected ? " selected" : "")}
-        onClick={this.props.onSelect}
+        className={"dropdown-header" + (dropDownHeaderSelected ? " selected" : "")}
+        onClick={onToggleDropDown}
       >
-        {this.props.name}
+        {dropDownHeader}
       </span>
-    )
-  }
+      {
+        dropDownOpen && (
+          <>
+            {children}
+            <div onClick={onToggleDropDown}>Close</div>
+          </>
+        )
+      }
+    </span>
+  );
+
 }
 
 class App extends Component {
   state = {
-    tabs: ["Cool Stuff", "Longer Items Are Here", "Boo", "Babba Nogga"],
-    selected: 0,
+    tabs: ["Cool Stuff", "Longer Items Are Here", "Boo", "Babba Nogga", "BlaBla", "Weee"],
+    selectedIndex: 0,
+    overflowIndex: 3,
+    dropDownOpen: false,
   }
 
-  handleSelect(i) { this.setState({selected: i});}
+  dropDownHeaderSelected() {
+    return this.state.selectedIndex >= this.state.overflowIndex;
+  }
+  
+  dropDownHeader() {
+    return this.dropDownHeaderSelected() ?
+      this.state.tabs[this.state.selectedIndex] :
+      "More";
+  }
+  
+  handleSelect = (i) => {
+    this.setState({selectedIndex: i});
+  };
+
+  handleToggleDropDown = () => {
+    this.setState({dropDownOpen: !this.state.dropDownOpen});
+  };
 
   render() {
     return (
-      <div className="App">
-        {this.state.tabs.map((tab, i) =>
-          <Tab
-            name={tab}
-            key={i}
-            selected={i === this.state.selected}
-            onSelect={()=>this.handleSelect(i)}
+      <div className="TabBar">
+        <VisibleTabs
+          tabs={this.state.tabs}
+          selectedIndex={this.state.selectedIndex}
+          overflowIndex={this.state.overflowIndex}
+          onSelect={this.handleSelect}
+        />
+        <DropDown
+          dropDownOpen={this.state.dropDownOpen}
+          onToggleDropDown={this.handleToggleDropDown}
+          dropDownHeader={this.dropDownHeader()}
+          dropDownHeaderSelected={this.dropDownHeaderSelected()}
+        >
+          <DropDownMenu
+            tabs={this.state.tabs}
+            selectedIndex={this.state.selectedIndex}
+            overflowIndex={this.state.overflowIndex}
+            onSelect={(i)=>{this.handleSelect(i);this.handleToggleDropDown();}}
           />
-        )}
+        </DropDown>
       </div>
     );
   }

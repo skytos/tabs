@@ -13,6 +13,6 @@ body {
   content: " ";
   white-space: normal;
 }
-.tab.selected,.tab:hover {
+.tab.selected,.tab:hover,.dropdown-header.selected,.dropdown-header:hover {
   font-weight: bold;
 }
