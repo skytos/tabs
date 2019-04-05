@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function DropDown(props) {
   var {children, dropDownOpen, dropDownHeader, dropDownHeaderSelected, onToggleDropDown} = props;

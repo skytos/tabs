@@ -13,7 +13,7 @@ class TabBar extends Component {
 
   state = {
     tabs: ["Cool Stuff", "Longer Items Are Here", "Boo", "Babba Nogga", "BlaBla", "Weee"],
-    selectedIndex: 0,
+    selectedIndex: +window.sessionStorage.selectedIndex || 0,
     overflowIndex: undefined,
     dropDownOpen: false,
   }
@@ -36,6 +36,7 @@ class TabBar extends Component {
   }
 
   handleSelect = (i) => {
+    window.sessionStorage.selectedIndex = i;
     this.setState({selectedIndex: i});
   };
 
